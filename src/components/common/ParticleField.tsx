@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import clsx from 'clsx'
 
 interface ParticleFieldProps {
@@ -9,19 +9,25 @@ interface ParticleFieldProps {
 /**
  * Lightweight CSS-only floating particle background.
  * Uses CSS animations — no JS runtime cost.
+ * useMemo ensures random values are computed once, not on every re-render.
  */
 export const ParticleField: React.FC<ParticleFieldProps> = ({
   className,
   count = 20,
 }) => {
-  const particles = Array.from({ length: count }, (_, i) => ({
-    id: i,
-    size: Math.random() * 4 + 1,
-    left: Math.random() * 100,
-    delay: Math.random() * 20,
-    duration: Math.random() * 15 + 15,
-    opacity: Math.random() * 0.3 + 0.1,
-  }))
+  // Memoized: random values are stable across re-renders unless count changes
+  const particles = useMemo(
+    () =>
+      Array.from({ length: count }, (_, i) => ({
+        id: i,
+        size: Math.random() * 4 + 1,
+        left: Math.random() * 100,
+        delay: Math.random() * 20,
+        duration: Math.random() * 15 + 15,
+        opacity: Math.random() * 0.3 + 0.1,
+      })),
+    [count]
+  )
 
   return (
     <div

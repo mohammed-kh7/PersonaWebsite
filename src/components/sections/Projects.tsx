@@ -159,12 +159,21 @@ export const Projects: React.FC = () => {
                       {/* Image Preview Area */}
                       <div className="relative aspect-video w-full overflow-hidden bg-surface-100 dark:bg-surface-850">
                         {project.image ? (
-                          <img
-                            src={project.image}
-                            alt={`${content.title} preview`}
-                            className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
-                            loading="lazy"
-                          />
+                          <picture>
+                            <source
+                              srcSet={project.image.replace(/\.(png|jpg|jpeg)$/i, '.webp')}
+                              type="image/webp"
+                            />
+                            <img
+                              src={project.image}
+                              alt={`${content.title} preview`}
+                              className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                              loading="lazy"
+                              decoding="async"
+                              width={600}
+                              height={338}
+                            />
+                          </picture>
                         ) : (
                           <div className="flex h-full w-full items-center justify-center">
                             <span className="select-none text-4xl font-bold text-primary-500/20 dark:text-primary-400/15">

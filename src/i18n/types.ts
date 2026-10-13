@@ -2,10 +2,11 @@ export type Locale = 'en' | 'ar'
 export type Direction = 'ltr' | 'rtl'
 
 export type NavKey = 'home' | 'about' | 'skills' | 'projects' | 'services' | 'contact'
-export type SkillCategory = 'frontend' | 'tools' | 'automation'
+export type SkillCategory = 'frontend' | 'tools' | 'automation' | 'performance'
 export type SkillId =
   | 'react'
   | 'javascript'
+  | 'typescript'
   | 'html-css'
   | 'tailwind'
   | 'responsive-design'
@@ -16,6 +17,9 @@ export type SkillId =
   | 'ai-integration'
   | 'api-automation'
   | 'webhook-design'
+  | 'performance'
+  | 'architecture'
+  | 'vite'
 
 export interface StatItem {
   value: string
@@ -83,10 +87,15 @@ export interface Dictionary {
   }
   hero: {
     greeting: string
-    descriptionLead: string
-    descriptionTail: string
+    headlinePart1: string
+    headlineKeyword1: string
+    headlinePart2: string
+    headlineKeyword2: string
+    headlineEnd: string
+    subtitle: string
     ctaPrimary: string
     ctaSecondary: string
+    availableBadge: string
     stats: StatItem[]
     profileAlt: string
     scrollIndicator: string

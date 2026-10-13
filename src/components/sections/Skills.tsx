@@ -9,17 +9,19 @@ import {
   FiLayout,
   FiZap,
   FiGitBranch,
-  FiCpu,
   FiBox,
   FiFeather,
   FiTool,
-  FiDatabase,
   FiTerminal,
+  FiLayers,
+  FiDatabase,
+  FiCpu,
 } from 'react-icons/fi'
 
 const skillIcons: Record<SkillId, React.ElementType> = {
   react: FiCode,
   javascript: FiTerminal,
+  typescript: FiCode,
   'html-css': FiLayout,
   tailwind: FiFeather,
   'responsive-design': FiBox,
@@ -30,6 +32,9 @@ const skillIcons: Record<SkillId, React.ElementType> = {
   'ai-integration': FiCpu,
   'api-automation': FiZap,
   'webhook-design': FiBox,
+  performance: FiZap,
+  architecture: FiLayers,
+  vite: FiZap,
 }
 
 const categoryStyles: Record<
@@ -37,16 +42,20 @@ const categoryStyles: Record<
   { pillBg: string; pillText: string }
 > = {
   frontend: {
-    pillBg: 'bg-primary-500/10 hover:bg-primary-500/20 border-primary-500/20',
-    pillText: 'text-primary-600 dark:text-primary-400',
+    pillBg: 'bg-blue-600/10 hover:bg-blue-600/20 border-blue-600/25',
+    pillText: 'text-blue-600 dark:text-blue-400',
   },
   tools: {
-    pillBg: 'bg-accent-pink-500/10 hover:bg-accent-pink-500/20 border-accent-pink-500/20',
-    pillText: 'text-accent-pink-600 dark:text-accent-pink-400',
+    pillBg: 'bg-slate-700/10 hover:bg-slate-700/20 border-slate-600/25',
+    pillText: 'text-slate-700 dark:text-slate-300',
   },
   automation: {
-    pillBg: 'bg-accent-cyan-500/10 hover:bg-accent-cyan-500/20 border-accent-cyan-500/20',
-    pillText: 'text-accent-cyan-600 dark:text-accent-cyan-400',
+    pillBg: 'bg-sky-500/10 hover:bg-sky-500/20 border-sky-400/30',
+    pillText: 'text-sky-600 dark:text-sky-300',
+  },
+  performance: {
+    pillBg: 'bg-blue-800/10 hover:bg-blue-800/20 border-blue-700/25',
+    pillText: 'text-blue-700 dark:text-blue-300',
   },
 }
 
@@ -56,7 +65,7 @@ export const Skills: React.FC = () => {
   return (
     <section
       id="skills"
-      className="section-padding relative overflow-hidden bg-surface-100/50 dark:bg-surface-900/50"
+      className="section-padding relative overflow-hidden bg-slate-100/50 dark:bg-slate-900/30"
     >
       <div className="container-custom relative z-10">
         <SectionHeading
@@ -65,9 +74,10 @@ export const Skills: React.FC = () => {
           subtitle={t.skills.subtitle}
         />
 
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {/* Bento grid layout */}
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {t.skills.categories.map((cat, catIdx) => {
-            const style = categoryStyles[cat.key]
+            const style = categoryStyles[cat.key] || categoryStyles.frontend
 
             return (
               <motion.div
@@ -75,25 +85,25 @@ export const Skills: React.FC = () => {
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-40px' }}
-                transition={{ duration: 0.5, delay: catIdx * 0.12 }}
+                transition={{ duration: 0.4, delay: catIdx * 0.1 }}
               >
-                <GlassPanel className="h-full p-6">
-                  <h3 className="mb-5 text-center sm:text-start text-lg font-semibold text-gray-900 dark:text-white">
+                <GlassPanel className="h-full p-6 shadow-sm">
+                  <h3 className="mb-5 text-center sm:text-start text-lg font-bold text-slate-900 dark:text-white">
                     {cat.label}
                   </h3>
                   <div className="flex flex-wrap justify-center sm:justify-start gap-2.5">
                     {t.skills.items
                       .filter((s) => s.category === cat.key)
                       .map((skill, i) => {
-                        const Icon = skillIcons[skill.id]
+                        const Icon = skillIcons[skill.id] || FiCode
 
                         return (
                           <motion.div
                             key={skill.id}
-                            initial={{ opacity: 0, scale: 0.8 }}
+                            initial={{ opacity: 0, scale: 0.85 }}
                             whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true }}
-                            transition={{ duration: 0.3, delay: catIdx * 0.1 + i * 0.06 }}
+                            transition={{ duration: 0.25, delay: catIdx * 0.08 + i * 0.04 }}
                           >
                             <span
                               className={`inline-flex items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-sm font-medium transition-colors ${style.pillBg} ${style.pillText}`}

@@ -5,7 +5,6 @@ import { Card } from '../common/Card'
 import { GlassPanel } from '../common/GlassPanel'
 import { Input, Textarea } from '../common/Input'
 import { Button } from '../common/Button'
-import { ParticleField } from '../common/ParticleField'
 import { useForm } from '@/hooks/useForm'
 import { useLanguage } from '@/context/LanguageContext'
 import { sendToN8n } from '@/utils/n8n-integration'
@@ -72,10 +71,8 @@ export const Contact: React.FC = () => {
   return (
     <section
       id="contact"
-      className="section-padding relative overflow-hidden bg-surface-100/50 dark:bg-surface-900/50"
+      className="section-padding relative overflow-hidden bg-slate-100/50 dark:bg-slate-900/30"
     >
-      <ParticleField count={10} />
-
       <div className="container-custom relative z-10">
         <SectionHeading
           title={t.contact.title}
@@ -93,10 +90,10 @@ export const Contact: React.FC = () => {
             className="space-y-6"
           >
             <div className="text-center lg:text-start">
-              <h3 className="mb-4 text-2xl font-bold text-gray-900 dark:text-white">
+              <h3 className="mb-4 text-2xl font-bold text-slate-900 dark:text-white">
                 {t.contact.connectTitle}
               </h3>
-              <p className="text-gray-600 dark:text-gray-400">
+              <p className="text-slate-600 dark:text-slate-400">
                 {t.contact.connectText}
               </p>
             </div>
@@ -104,16 +101,16 @@ export const Contact: React.FC = () => {
             <div className="space-y-4">
               <Card hover={false}>
                 <div className="flex flex-col items-center text-center lg:flex-row lg:text-start gap-4">
-                  <div className="rounded-xl bg-primary-500/10 p-3">
-                    <FiMail className="h-5 w-5 text-primary-500" />
+                  <div className="rounded-xl bg-blue-600/10 p-3">
+                    <FiMail className="h-5 w-5 text-blue-600 dark:text-blue-400" />
                   </div>
                   <div>
-                    <p className="text-sm font-semibold text-gray-900 dark:text-white">
+                    <p className="text-sm font-semibold text-slate-900 dark:text-white">
                       {t.contact.emailLabel}
                     </p>
                     <a
                       href="mailto:mohammedkhudair123@gmail.com"
-                      className="text-sm text-gray-500 transition-colors hover:text-primary-500 dark:text-gray-400 dark:hover:text-primary-400"
+                      className="text-sm text-slate-500 transition-colors hover:text-blue-600 dark:text-slate-400 dark:hover:text-blue-400"
                       dir="ltr"
                     >
                       mohammedkhudair123@gmail.com
@@ -124,14 +121,14 @@ export const Contact: React.FC = () => {
 
               <Card hover={false}>
                 <div className="flex flex-col items-center text-center lg:flex-row lg:text-start gap-4">
-                  <div className="rounded-xl bg-accent-cyan-500/10 p-3">
-                    <FiClock className="h-5 w-5 text-accent-cyan-500" />
+                  <div className="rounded-xl bg-blue-700/10 p-3">
+                    <FiClock className="h-5 w-5 text-blue-700 dark:text-blue-300" />
                   </div>
                   <div>
-                    <p className="text-sm font-semibold text-gray-900 dark:text-white">
+                    <p className="text-sm font-semibold text-slate-900 dark:text-white">
                       {t.contact.responseTimeLabel}
                     </p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                    <p className="text-sm text-slate-500 dark:text-slate-400">
                       {t.contact.responseTimeValue}
                     </p>
                   </div>
@@ -140,14 +137,14 @@ export const Contact: React.FC = () => {
 
               <Card hover={false}>
                 <div className="flex flex-col items-center text-center lg:flex-row lg:text-start gap-4">
-                  <div className="rounded-xl bg-accent-pink-500/10 p-3">
-                    <FiMessageSquare className="h-5 w-5 text-accent-pink-500" />
+                  <div className="rounded-xl bg-blue-600/10 p-3">
+                    <FiMessageSquare className="h-5 w-5 text-blue-600 dark:text-blue-400" />
                   </div>
                   <div>
-                    <p className="text-sm font-semibold text-gray-900 dark:text-white">
+                    <p className="text-sm font-semibold text-slate-900 dark:text-white">
                       {t.contact.talkLabel}
                     </p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                    <p className="text-sm text-slate-500 dark:text-slate-400">
                       {t.contact.talkValue}
                     </p>
                   </div>

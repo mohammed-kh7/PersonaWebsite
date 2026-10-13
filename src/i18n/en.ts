@@ -2,7 +2,7 @@ import type { Dictionary } from './types'
 
 export const en: Dictionary = {
   meta: {
-    title: 'Mohammed Khudair - Frontend Developer | React & AI Automation Specialist',
+    title: 'Mohammed Khudair - Frontend Developer & AI Automation Specialist',
     description:
       'Mohammed Khudair - Frontend Developer & AI Automation Specialist. React, JavaScript, N8n workflows, and modern web technologies.',
   },
@@ -39,14 +39,20 @@ export const en: Dictionary = {
   },
   hero: {
     greeting: "Hi there, I'm",
-    descriptionLead: 'Frontend Developer & AI Automation Specialist, working with',
-    descriptionTail: ', and AI-powered interfaces.',
+    headlinePart1: 'I build blazing-fast, interactive ',
+    headlineKeyword1: 'React interfaces',
+    headlinePart2: ',\ntransforming complex designs into ',
+    headlineKeyword2: 'exceptional user experiences',
+    headlineEnd: '.',
+    subtitle:
+      'Frontend Developer & AI Automation Specialist, working with React, N8n Automation, and AI-powered interfaces.',
     ctaPrimary: 'View My Work',
     ctaSecondary: 'Get In Touch',
+    availableBadge: 'Available for new opportunities',
     stats: [
-      { value: '5+', label: 'Technologies' },
-      { value: '10+', label: 'Projects' },
-      { value: '100%', label: 'Dedication' },
+      { value: '5+', label: 'Core Technologies' },
+      { value: '10+', label: 'Projects Built' },
+      { value: '100%', label: 'Dedication to Quality' },
     ],
     profileAlt: 'Mohammed Khudair — Frontend Developer & AI Automation Specialist',
     scrollIndicator: 'Scroll to about section',

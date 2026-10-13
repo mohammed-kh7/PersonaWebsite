@@ -30,6 +30,10 @@ export default defineConfig({
         manualChunks: {
           'react-vendor': ['react', 'react-dom'],
           'animation-vendor': ['framer-motion'],
+          // Split icon library — used across many sections but not in the critical path
+          'icons-vendor': ['react-icons'],
+          // Split carousel — only used in Projects section (lazy loaded)
+          'carousel-vendor': ['embla-carousel-react'],
         },
       },
     },

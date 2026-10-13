@@ -33,27 +33,20 @@ export const Button: React.FC<ButtonProps> = ({
 }) => {
   const variantStyles = {
     primary: clsx(
-      'bg-gradient-to-r from-primary-600 to-primary-500',
+      'bg-blue-600 hover:bg-blue-700 active:bg-blue-800',
       'text-white font-semibold',
-      'shadow-lg shadow-primary-500/25',
-      'hover:shadow-xl hover:shadow-primary-500/30',
-      'hover:from-primary-500 hover:to-primary-400',
-      'active:from-primary-700 active:to-primary-600',
-      'dark:from-primary-500 dark:to-accent-cyan-500',
-      'dark:shadow-primary-500/20',
-      'dark:hover:shadow-primary-500/30'
+      'shadow-md shadow-blue-600/20 hover:shadow-lg hover:shadow-blue-600/30'
     ),
     outline: clsx(
-      'border-2 border-primary-500/40',
-      'text-primary-600 dark:text-primary-400',
-      'hover:bg-primary-50 hover:border-primary-500/60',
-      'dark:hover:bg-primary-950/30 dark:hover:border-primary-400/50',
-      'active:bg-primary-100 dark:active:bg-primary-950/50'
+      'border-2 border-slate-300 dark:border-slate-700',
+      'text-slate-800 dark:text-slate-200 font-semibold',
+      'hover:border-blue-600 hover:text-blue-600 dark:hover:border-blue-500 dark:hover:text-blue-400',
+      'hover:bg-blue-50/50 dark:hover:bg-blue-950/20'
     ),
     ghost: clsx(
-      'text-gray-700 dark:text-gray-300',
-      'hover:bg-gray-100 dark:hover:bg-white/5',
-      'active:bg-gray-200 dark:active:bg-white/10'
+      'text-slate-700 dark:text-slate-300 font-medium',
+      'hover:bg-slate-100 dark:hover:bg-slate-800/60',
+      'active:bg-slate-200 dark:active:bg-slate-800'
     ),
   }
 
@@ -65,9 +58,19 @@ export const Button: React.FC<ButtonProps> = ({
 
   const Component = href ? motion.a : motion.button
 
+  // Block javascript: URLs — defense-in-depth if href ever comes from dynamic data.
+  const safeHref = href && /^javascript:/i.test(href) ? '#' : href
+
+  // When opening in a new tab, always enforce noopener noreferrer to prevent
+  // tabnabbing even if the caller omits the rel prop.
+  const safeRel =
+    target === '_blank'
+      ? ['noopener', 'noreferrer', ...(rel ?? '').split(' ').filter(Boolean)].join(' ')
+      : rel
+
   return (
     <Component
-      {...(href ? { href, target, rel } : { type })}
+      {...(safeHref ? { href: safeHref, target, rel: safeRel } : { type })}
       whileHover={{ scale: disabled || isLoading ? 1 : 1.02 }}
       whileTap={{ scale: disabled || isLoading ? 1 : 0.98 }}
       className={clsx(

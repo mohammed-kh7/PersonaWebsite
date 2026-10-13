@@ -38,7 +38,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           >
             {label}
             {props.required && (
-              <span className="ms-1 text-accent-pink-500">*</span>
+              <span className="ms-1 text-blue-600 dark:text-blue-400">*</span>
             )}
           </label>
         )}
@@ -93,7 +93,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           >
             {label}
             {props.required && (
-              <span className="ms-1 text-accent-pink-500">*</span>
+              <span className="ms-1 text-blue-600 dark:text-blue-400">*</span>
             )}
           </label>
         )}

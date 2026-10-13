@@ -20,11 +20,11 @@ export const Card: React.FC<CardProps> = ({
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-40px' }}
-      transition={{ duration: 0.5, ease: 'easeOut' }}
+      transition={{ duration: 0.4, ease: 'easeOut' }}
       className={clsx(
-        'glass-panel p-6',
+        'glass-panel p-6 shadow-sm',
         hover && 'card-hover',
-        glow && 'shadow-glow-sm hover:shadow-glow-md',
+        glow && 'border-blue-500/30',
         className
       )}
     >
