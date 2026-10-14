@@ -10,6 +10,7 @@ import { useState, useEffect, useRef, RefObject } from 'react'
 export const useInView = <T extends HTMLElement = HTMLDivElement>(
   options: IntersectionObserverInit = {}
 ): [RefObject<T | null>, boolean] => {
+  const { threshold, rootMargin } = options
   const [isInView, setIsInView] = useState(false)
   const ref = useRef<T | null>(null)
 
@@ -26,9 +27,8 @@ export const useInView = <T extends HTMLElement = HTMLDivElement>(
         }
       },
       {
-        threshold: options.threshold ?? 0.1,
-        rootMargin: options.rootMargin ?? '0px 0px -50px 0px',
-        ...options,
+        threshold: threshold ?? 0.1,
+        rootMargin: rootMargin ?? '0px 0px -50px 0px',
       }
     )
 
@@ -37,7 +37,7 @@ export const useInView = <T extends HTMLElement = HTMLDivElement>(
     return () => {
       observer.disconnect()
     }
-  }, [options.threshold, options.rootMargin])
+  }, [rootMargin, threshold])
 
   return [ref, isInView]
 }

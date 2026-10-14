@@ -66,18 +66,26 @@ npm run type-check   # Check TypeScript types
 
 ```
 src/
+├── api/                  # Client-side API adapters
+├── assets/               # Imported source assets
 ├── components/
-│   ├── common/           # Reusable components (Button, Card, Input)
-│   ├── layout/           # Layout components (Navbar, Footer, Layout)
-│   └── sections/         # Page sections (Hero, Contact, etc.)
-├── pages/                # Page components
-├── context/              # React context (Theme)
-├── hooks/                # Custom hooks
-├── utils/                # Utility functions
-├── types/                # TypeScript types
-├── App.tsx              # Main app component
-├── main.tsx             # Entry point
-└── index.css            # Global styles
+│   ├── common/            # Shared visual components
+│   ├── layout/            # Navbar and footer
+│   ├── providers/         # Application context providers
+│   ├── sections/          # Portfolio sections
+│   ├── skeleton/          # Loading placeholders
+│   └── ui/                # Buttons and form controls
+├── constants/             # Shared constants
+├── hooks/                 # Custom React hooks
+├── i18n/                  # English and Arabic translations
+├── pages/                 # Page compositions
+├── schemas/               # Plain TypeScript validation
+├── store/                 # Lightweight client state examples
+├── types/                 # Shared TypeScript types
+├── utils/                 # Helpers and integrations
+├── App.tsx                # Application shell
+├── main.tsx               # Entry point
+└── index.css              # Global styles
 ```
 
 ## 🎨 **Customization**

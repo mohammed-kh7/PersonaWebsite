@@ -1,7 +1,7 @@
 import React from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiGlobe } from 'react-icons/fi'
-import { useLanguage } from '@/context/LanguageContext'
+import { useLanguage } from '@/components/providers/LanguageContext'
 import { localeLabels, localeShortLabels } from '@/i18n'
 import clsx from 'clsx'
 

@@ -3,10 +3,10 @@ import { motion } from 'framer-motion'
 import { SectionHeading } from '../common/SectionHeading'
 import { Card } from '../common/Card'
 import { GlassPanel } from '../common/GlassPanel'
-import { Input, Textarea } from '../common/Input'
-import { Button } from '../common/Button'
+import { Input, Textarea } from '@/components/ui/Input'
+import { Button } from '@/components/ui/Button'
 import { useForm } from '@/hooks/useForm'
-import { useLanguage } from '@/context/LanguageContext'
+import { useLanguage } from '@/components/providers/LanguageContext'
 import { sendToN8n } from '@/utils/n8n-integration'
 import {
   FiMail,

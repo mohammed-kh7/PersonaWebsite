@@ -30,7 +30,7 @@ export interface UseFormOptions {
   fieldLabels?: Record<string, string>
 }
 
-export const useForm = <T extends Record<string, any>>(
+export const useForm = <T extends object>(
   initialValues: T,
   validationRules: FieldValidation,
   options: UseFormOptions = {}
@@ -41,7 +41,7 @@ export const useForm = <T extends Record<string, any>>(
 
   const { messages, fieldLabels } = options
 
-  const validateField = (name: string, value: any): string => {
+  const validateField = (name: string, value: string): string => {
     const rules = validationRules[name]
     if (!rules) return ''
 
@@ -97,7 +97,7 @@ export const useForm = <T extends Record<string, any>>(
     let isValid = true
 
     Object.keys(validationRules).forEach((key) => {
-      const error = validateField(key, values[key])
+      const error = validateField(key, values[key as keyof T] as string)
       if (error) {
         newErrors[key] = error
         isValid = false

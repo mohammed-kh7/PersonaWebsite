@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components -- provider and its hook are colocated by design. */
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { STORAGE_KEY, dictionaries, directions, interpolate, isLocale, locales } from '@/i18n'
 import type { Dictionary, Direction, Locale } from '@/i18n'

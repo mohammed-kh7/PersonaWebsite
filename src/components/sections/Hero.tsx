@@ -1,6 +1,6 @@
 import React from 'react'
 import { motion } from 'framer-motion'
-import { useLanguage } from '@/context/LanguageContext'
+import { useLanguage } from '@/components/providers/LanguageContext'
 import { FiGithub, FiLinkedin, FiMail } from 'react-icons/fi'
 import { FaFacebook } from 'react-icons/fa'
 

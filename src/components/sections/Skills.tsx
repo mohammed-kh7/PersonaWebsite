@@ -2,7 +2,7 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import { SectionHeading } from '../common/SectionHeading'
 import { GlassPanel } from '../common/GlassPanel'
-import { useLanguage } from '@/context/LanguageContext'
+import { useLanguage } from '@/components/providers/LanguageContext'
 import type { SkillCategory, SkillId } from '@/i18n'
 import {
   FiCode,

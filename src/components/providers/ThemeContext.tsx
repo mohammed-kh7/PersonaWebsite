@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components -- provider and its hook are colocated by design. */
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import type { ThemeContextType } from '@/types'
 

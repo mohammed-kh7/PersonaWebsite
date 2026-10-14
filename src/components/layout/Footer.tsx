@@ -2,7 +2,7 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import { FiGithub, FiLinkedin, FiMail, FiInstagram, FiArrowUp } from 'react-icons/fi'
 import { FaFacebook } from 'react-icons/fa'
-import { useLanguage } from '@/context/LanguageContext'
+import { useLanguage } from '@/components/providers/LanguageContext'
 
 const socialLinks = [
   { name: 'GitHub', icon: FiGithub, url: 'https://github.com/mohammed-kh7' },

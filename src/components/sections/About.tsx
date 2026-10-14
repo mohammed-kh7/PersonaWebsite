@@ -2,7 +2,7 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import { SectionHeading } from '../common/SectionHeading'
 import { Card } from '../common/Card'
-import { useLanguage } from '@/context/LanguageContext'
+import { useLanguage } from '@/components/providers/LanguageContext'
 import { FiCode, FiZap } from 'react-icons/fi'
 
 const highlightIcons = {
