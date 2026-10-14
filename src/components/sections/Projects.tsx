@@ -66,6 +66,7 @@ export const Projects: React.FC = () => {
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: 'start',
+    direction: locale === 'ar' ? 'rtl' : 'ltr',
     loop: false,
     dragFree: true,
   })
