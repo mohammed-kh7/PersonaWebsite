@@ -99,11 +99,6 @@ export const Projects: React.FC = () => {
     emblaApi.on('select', onSelect)
   }, [emblaApi, onInit, onSelect])
 
-  // Embla resolves the scroll direction once, so re-initialise when the locale flips
-  useEffect(() => {
-    emblaApi?.reInit()
-  }, [emblaApi, locale])
-
   return (
     <section id="projects" className="section-padding relative overflow-hidden">
       <div className="container-custom relative z-10">
