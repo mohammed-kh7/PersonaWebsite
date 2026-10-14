@@ -13,7 +13,7 @@
  */
 
 const WEBHOOK_URL = readEnv('N8N_WEBHOOK_URL') ?? ''
-/** Optional shared secret; set the same value on the N8n Webhook node's header auth. */
+/** Required shared secret; set the same value on the N8n Webhook node's header auth. */
 const WEBHOOK_SECRET = readEnv('N8N_WEBHOOK_SECRET') ?? ''
 const ALLOWED_ORIGINS = (readEnv('ALLOWED_ORIGINS') ?? '')
   .split(',')
@@ -24,6 +24,17 @@ const RATE_LIMIT_MAX = 5
 const RATE_LIMIT_WINDOW_MS = 60_000
 const TIMEOUT_MS = 8_000
 const MAX_BODY_BYTES = 16 * 1024
+const UPSTASH_REDIS_REST_URL = readEnv('UPSTASH_REDIS_REST_URL')
+const UPSTASH_REDIS_REST_TOKEN = readEnv('UPSTASH_REDIS_REST_TOKEN')
+
+const sharedRateLimit =
+  UPSTASH_REDIS_REST_URL && UPSTASH_REDIS_REST_TOKEN
+    ? new Ratelimit({
+        redis: new Redis({ url: UPSTASH_REDIS_REST_URL, token: UPSTASH_REDIS_REST_TOKEN }),
+        limiter: Ratelimit.slidingWindow(RATE_LIMIT_MAX, '1 m'),
+        prefix: 'portfolio-contact',
+      })
+    : null
 
 /** Mirrors src/utils/n8n-integration.ts. The server is authoritative. */
 const LIMITS = {
@@ -111,13 +122,26 @@ const sweep = (now: number): void => {
  * per request and walk straight through the rate limit.
  */
 const clientKey = (req: ApiRequest): string => {
+  const trustedForwarded = header(req, 'x-vercel-forwarded-for') || header(req, 'x-real-ip')
+  const trustedChain = trustedForwarded.split(',').map((value) => value.trim()).filter(Boolean)
+  if (trustedChain.length > 0) return trustedChain[trustedChain.length - 1]
+
   const forwarded = header(req, 'x-forwarded-for')
   const chain = forwarded.split(',').map((value) => value.trim()).filter(Boolean)
   const candidate = chain.length > 0 ? chain[chain.length - 1] : ''
   return candidate || header(req, 'x-real-ip') || 'unknown'
 }
 
-const isRateLimited = (key: string): boolean => {
+const isRateLimited = async (key: string): Promise<boolean> => {
+  if (sharedRateLimit) {
+    try {
+      const { success } = await sharedRateLimit.limit(key)
+      return !success
+    } catch (error) {
+      console.error('[contact] shared rate limiter unavailable; using local fallback', error)
+    }
+  }
+
   const now = Date.now()
   sweep(now)
 
@@ -139,8 +163,19 @@ const readBody = (body: unknown): ContactPayload => {
   return (body ?? {}) as ContactPayload
 }
 
-const str = (value: unknown, max: number): string =>
-  typeof value === 'string' ? value.trim().slice(0, max) : ''
+const cleanSingleLine = (value: unknown, max: number): string =>
+  typeof value === 'string'
+    // This pattern intentionally removes all C0/C1 control characters.
+    // eslint-disable-next-line no-control-regex
+    ? value.replace(/[\u0000-\u001f\u007f-\u009f]/g, '').trim().slice(0, max)
+    : ''
+
+const cleanMessage = (value: unknown, max: number): string =>
+  typeof value === 'string'
+    // Preserve only newline and tab among control characters.
+    // eslint-disable-next-line no-control-regex
+    ? value.replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f-\u009f]/g, '').trim().slice(0, max)
+    : ''
 
 /** JSON.parse throws on malformed input; an attacker sends that on purpose. */
 const parseBody = (body: unknown): ContactPayload | null => {
@@ -152,10 +187,10 @@ const parseBody = (body: unknown): ContactPayload | null => {
 }
 
 const validate = (data: ContactPayload) => {
-  const name = str(data.name, LIMITS.name)
-  const email = str(data.email, LIMITS.email).toLowerCase()
-  const subject = str(data.subject, LIMITS.subject)
-  const message = str(data.message, LIMITS.message)
+  const name = cleanSingleLine(data.name, LIMITS.name)
+  const email = cleanSingleLine(data.email, LIMITS.email).toLowerCase()
+  const subject = cleanSingleLine(data.subject, LIMITS.subject)
+  const message = cleanMessage(data.message, LIMITS.message)
 
   if (name.length < 2 || !EMAIL_PATTERN.test(email)) return null
   if (subject.length < 3 || message.length < 10) return null
@@ -172,18 +207,18 @@ export default async function handler(req: ApiRequest, res: ApiResponse): Promis
     return
   }
 
-  // Weak CSRF gate: a browser form post from another origin sends no matching
-  // Origin header, and JSON content-types cannot be produced by a cross-origin
-  // <form> without a CORS preflight.
-  if (ALLOWED_ORIGINS.length > 0) {
-    const origin = header(req, 'origin')
-    if (origin && !ALLOWED_ORIGINS.includes(origin)) {
-      res.status(403).json({ ok: false, code: 'forbidden' })
-      return
-    }
+  const origin = header(req, 'origin')
+  if (ALLOWED_ORIGINS.length === 0 || !origin || !ALLOWED_ORIGINS.includes(origin)) {
+    res.status(403).json({ ok: false, code: 'forbidden' })
+    return
   }
 
-  if (isRateLimited(clientKey(req))) {
+  if (!/^application\/json(?:\s*;|\s*$)/i.test(header(req, 'content-type'))) {
+    res.status(415).json({ ok: false, code: 'content_type' })
+    return
+  }
+
+  if (await isRateLimited(clientKey(req))) {
     res.setHeader('Retry-After', String(RATE_LIMIT_WINDOW_MS / 1000))
     res.status(429).json({ ok: false, code: 'rate_limited' })
     return
@@ -219,7 +254,7 @@ export default async function handler(req: ApiRequest, res: ApiResponse): Promis
     return
   }
 
-  if (!WEBHOOK_URL) {
+  if (!WEBHOOK_URL || !WEBHOOK_SECRET) {
     res.status(503).json({ ok: false, code: 'unavailable' })
     return
   }
@@ -232,7 +267,7 @@ export default async function handler(req: ApiRequest, res: ApiResponse): Promis
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        ...(WEBHOOK_SECRET ? { 'x-webhook-secret': WEBHOOK_SECRET } : {}),
+        'x-webhook-secret': WEBHOOK_SECRET,
       },
       body: JSON.stringify({ ...message, timestamp: new Date().toISOString() }),
       signal: controller.signal,
@@ -253,3 +288,6 @@ export default async function handler(req: ApiRequest, res: ApiResponse): Promis
     clearTimeout(timeoutId)
   }
 }
+import { Ratelimit } from '@upstash/ratelimit'
+import { Redis } from '@upstash/redis'
+

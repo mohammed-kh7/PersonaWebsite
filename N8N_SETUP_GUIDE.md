@@ -68,6 +68,8 @@ This portfolio includes N8n automation integration for the contact form. N8n is 
    - Configure SMTP settings
    - Use same HTML template above
 
+   HTML-escape `name`, `email`, `subject`, and `message` in every HTML email template.
+
 5. **Optional: Add Slack Node**
    - Send notifications to Slack channel
    - Add "Slack" node after Email
@@ -130,9 +132,11 @@ N8N_WEBHOOK_SECRET=choose-a-long-random-value
 ALLOWED_ORIGINS=https://your-domain.com,http://localhost:3000
 ```
 
-2. (Recommended) On the N8n Webhook node, enable **Header Auth** and set the same
-   `N8N_WEBHOOK_SECRET`. `api/contact.ts` forwards it as `x-webhook-secret`,
-   so only your own function can trigger the workflow.
+2. On the N8n Webhook node, select **Authentication → Header Auth**, create a
+   credential with header name `x-webhook-secret` and the same value as
+   `N8N_WEBHOOK_SECRET`, then save it. `api/contact.ts` forwards that header,
+   so only your own function can trigger the workflow. The secret is required;
+   submissions return an unavailable error until it is configured.
 
 3. Restart development server:
 ```bash

@@ -140,8 +140,12 @@ theme: {
 ```env
 N8N_WEBHOOK_URL=https://your-n8n-instance.com/webhook/your-id
 N8N_WEBHOOK_SECRET=choose-a-long-random-value
-ALLOWED_ORIGINS=https://your-domain.com,http://localhost:3000
+ALLOWED_ORIGINS=https://persona-website-mlux.vercel.app,http://localhost:3000
 ```
+
+`ALLOWED_ORIGINS` is required in production. Set it to the exact production
+origin (`https://persona-website-mlux.vercel.app`) plus any custom domain. Keep
+`http://localhost:3000` in the list for local development.
 
 5. Add Email/Slack node after webhook to process form data
 6. Optionally set the same secret on the Webhook node's **header auth** so only
