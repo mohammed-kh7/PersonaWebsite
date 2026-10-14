@@ -1,5 +1,5 @@
 import React from 'react'
-import { motion } from 'framer-motion'
+import { m } from 'framer-motion'
 import { SectionHeading } from '../common/SectionHeading'
 import { Card } from '../common/Card'
 import { useLanguage } from '@/components/providers/LanguageContext'
@@ -29,7 +29,7 @@ export const About: React.FC = () => {
 
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
           {/* Bio */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -57,7 +57,7 @@ export const About: React.FC = () => {
                 </span>
               ))}
             </div>
-          </motion.div>
+          </m.div>
 
           {/* Highlight Cards */}
           <div className="space-y-4">
@@ -66,7 +66,7 @@ export const About: React.FC = () => {
               const style = highlightStyles[h.id]
 
               return (
-                <motion.div
+                <m.div
                   key={h.id}
                   initial={{ opacity: 0, x: 30 }}
                   whileInView={{ opacity: 1, x: 0 }}
@@ -86,7 +86,7 @@ export const About: React.FC = () => {
                       </p>
                     </div>
                   </Card>
-                </motion.div>
+                </m.div>
               )
             })}
           </div>

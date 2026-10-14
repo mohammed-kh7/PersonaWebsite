@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
+import { m } from 'framer-motion'
 import useEmblaCarousel from 'embla-carousel-react'
 import type { EmblaCarouselType } from 'embla-carousel'
 import { SectionHeading } from '../common/SectionHeading'
@@ -11,6 +11,8 @@ import { FiGithub, FiExternalLink, FiChevronLeft, FiChevronRight } from 'react-i
 
 interface ProjectLink {
   image: string
+  width: number
+  height: number
   technologies: string[]
   liveUrl?: string
   githubUrl?: string
@@ -19,30 +21,40 @@ interface ProjectLink {
 const projects: ProjectLink[] = [
   {
     image: '/images/projects/portfolio.png',
+    width: 1024,
+    height: 425,
     technologies: ['HTML5', 'CSS3', 'JavaScript', 'Responsive Design'],
     liveUrl: 'https://mohammed-kh7.github.io/MO1/',
     githubUrl: 'https://github.com/mohammed-kh7/MO1',
   },
   {
     image: '/images/projects/cruds.png',
+    width: 1024,
+    height: 574,
     technologies: ['JavaScript', 'HTML5', 'CSS3', 'LocalStorage'],
     liveUrl: 'https://mohammed-kh7.github.io/cruds/',
     githubUrl: 'https://github.com/mohammed-kh7/cruds',
   },
   {
     image: '/images/projects/xo.png',
+    width: 724,
+    height: 781,
     technologies: ['JavaScript', 'HTML5', 'CSS3', 'DOM Manipulation'],
     liveUrl: 'https://mohammed-kh7.github.io/XO/',
     githubUrl: 'https://github.com/mohammed-kh7/XO',
   },
   {
     image: '/images/projects/hangman.png',
+    width: 1024,
+    height: 490,
     technologies: ['JavaScript', 'HTML5', 'CSS3', 'Game Logic'],
     liveUrl: 'https://mohammed-kh7.github.io/Hangman/',
     githubUrl: 'https://github.com/mohammed-kh7/Hangman',
   },
   {
     image: '/images/projects/currency-converter.png',
+    width: 511,
+    height: 638,
     technologies: ['JavaScript', 'HTML5', 'CSS3', 'Currency Logic'],
     liveUrl: 'https://mohammed-kh7.github.io/-/',
     githubUrl: 'https://github.com/mohammed-kh7/-',
@@ -148,7 +160,7 @@ export const Projects: React.FC = () => {
                     total: t.projects.items.length,
                   })}
                 >
-                  <motion.div
+                  <m.div
                     initial={{ opacity: 0, y: 24 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '-40px' }}
@@ -170,8 +182,8 @@ export const Projects: React.FC = () => {
                               className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
                               loading="lazy"
                               decoding="async"
-                              width={600}
-                              height={338}
+                              width={project.width}
+                              height={project.height}
                             />
                           </picture>
                         ) : (
@@ -249,7 +261,7 @@ export const Projects: React.FC = () => {
                         </div>
                       </div>
                     </Card>
-                  </motion.div>
+                  </m.div>
                 </div>
               )
             })}

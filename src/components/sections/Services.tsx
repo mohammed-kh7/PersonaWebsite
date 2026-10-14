@@ -1,5 +1,5 @@
 import React from 'react'
-import { motion } from 'framer-motion'
+import { m } from 'framer-motion'
 import { SectionHeading } from '../common/SectionHeading'
 import { Card } from '../common/Card'
 import { useLanguage } from '@/components/providers/LanguageContext'
@@ -40,7 +40,7 @@ export const Services: React.FC = () => {
             const accent = colorAccents[i % colorAccents.length]
 
             return (
-              <motion.div
+              <m.div
                 key={service.id}
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -71,7 +71,7 @@ export const Services: React.FC = () => {
                     ))}
                   </ul>
                 </Card>
-              </motion.div>
+              </m.div>
             )
           })}
         </div>

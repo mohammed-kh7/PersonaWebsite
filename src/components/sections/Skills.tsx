@@ -1,5 +1,5 @@
 import React from 'react'
-import { motion } from 'framer-motion'
+import { m } from 'framer-motion'
 import { SectionHeading } from '../common/SectionHeading'
 import { GlassPanel } from '../common/GlassPanel'
 import { useLanguage } from '@/components/providers/LanguageContext'
@@ -80,7 +80,7 @@ export const Skills: React.FC = () => {
             const style = categoryStyles[cat.key] || categoryStyles.frontend
 
             return (
-              <motion.div
+              <m.div
                 key={cat.key}
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -98,7 +98,7 @@ export const Skills: React.FC = () => {
                         const Icon = skillIcons[skill.id] || FiCode
 
                         return (
-                          <motion.div
+                          <m.div
                             key={skill.id}
                             initial={{ opacity: 0, scale: 0.85 }}
                             whileInView={{ opacity: 1, scale: 1 }}
@@ -111,12 +111,12 @@ export const Skills: React.FC = () => {
                               <Icon className="h-3.5 w-3.5" />
                               {skill.label}
                             </span>
-                          </motion.div>
+                          </m.div>
                         )
                       })}
                   </div>
                 </GlassPanel>
-              </motion.div>
+              </m.div>
             )
           })}
         </div>

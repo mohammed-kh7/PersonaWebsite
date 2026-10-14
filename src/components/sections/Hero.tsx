@@ -1,5 +1,5 @@
 import React from 'react'
-import { motion } from 'framer-motion'
+import { m } from 'framer-motion'
 import { useLanguage } from '@/components/providers/LanguageContext'
 import { FiGithub, FiLinkedin, FiMail } from 'react-icons/fi'
 import { FaFacebook } from 'react-icons/fa'
@@ -48,7 +48,7 @@ export const Hero: React.FC = () => {
       <div className="container-custom w-full">
         <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-12">
           {/* Photo Section: First on mobile (order-1), Right on desktop (lg:order-2) */}
-          <motion.div
+          <m.div
             className="order-1 flex justify-center lg:order-2 lg:justify-end rtl:lg:justify-start lg:col-span-5"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -77,10 +77,10 @@ export const Hero: React.FC = () => {
                 </picture>
               </div>
             </div>
-          </motion.div>
+          </m.div>
 
           {/* Typography & CTAs: Second on mobile (order-2, centered), Left on desktop (lg:order-1, start-aligned) */}
-          <motion.div
+          <m.div
             className="order-2 flex flex-col items-center text-center lg:order-1 lg:col-span-7 lg:items-start lg:text-start"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -163,7 +163,7 @@ export const Hero: React.FC = () => {
                 </div>
               ))}
             </div>
-          </motion.div>
+          </m.div>
         </div>
       </div>
     </section>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { motion } from 'framer-motion'
+import { m } from 'framer-motion'
 import clsx from 'clsx'
 
 interface ButtonProps {
@@ -56,7 +56,7 @@ export const Button: React.FC<ButtonProps> = ({
     lg: 'px-8 py-4 text-lg rounded-xl',
   }
 
-  const Component = href ? motion.a : motion.button
+  const Component = href ? m.a : m.button
 
   // Block javascript: URLs — defense-in-depth if href ever comes from dynamic data.
   const safeHref = href && /^javascript:/i.test(href) ? '#' : href

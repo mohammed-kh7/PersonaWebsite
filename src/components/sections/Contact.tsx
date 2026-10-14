@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { motion } from 'framer-motion'
+import { m } from 'framer-motion'
 import { SectionHeading } from '../common/SectionHeading'
 import { Card } from '../common/Card'
 import { GlassPanel } from '../common/GlassPanel'
@@ -82,7 +82,7 @@ export const Contact: React.FC = () => {
 
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
           {/* Contact Info */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -151,10 +151,10 @@ export const Contact: React.FC = () => {
                 </div>
               </Card>
             </div>
-          </motion.div>
+          </m.div>
 
           {/* Contact Form */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -162,7 +162,7 @@ export const Contact: React.FC = () => {
           >
             <GlassPanel strong className="p-6 sm:p-8">
               {submitStatus === 'success' ? (
-                <motion.div
+                <m.div
                   initial={{ scale: 0.8, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   className="flex flex-col items-center py-12 text-center"
@@ -176,7 +176,7 @@ export const Contact: React.FC = () => {
                   <p className="text-gray-600 dark:text-gray-400">
                     {t.contact.form.successText}
                   </p>
-                </motion.div>
+                </m.div>
               ) : (
                 <form onSubmit={onSubmit} className="space-y-5" noValidate>
                   {/* Honeypot — visually hidden but present in the DOM for bots to fill */}
@@ -267,7 +267,7 @@ export const Contact: React.FC = () => {
                 </form>
               )}
             </GlassPanel>
-          </motion.div>
+          </m.div>
         </div>
       </div>
     </section>

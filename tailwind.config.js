@@ -53,9 +53,9 @@ export default {
         },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-        display: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
-        arabic: ['Tajawal', 'Inter', 'system-ui', 'sans-serif'],
+        sans: ['Inter Variable', 'system-ui', '-apple-system', 'sans-serif'],
+        display: ['Plus Jakarta Sans', 'Inter Variable', 'sans-serif'],
+        arabic: ['Tajawal', 'Inter Variable', 'system-ui', 'sans-serif'],
       },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-out forwards',

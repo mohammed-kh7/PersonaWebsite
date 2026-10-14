@@ -1,5 +1,5 @@
 import React from 'react'
-import { motion } from 'framer-motion'
+import { m } from 'framer-motion'
 import clsx from 'clsx'
 
 interface CardProps {
@@ -16,7 +16,7 @@ export const Card: React.FC<CardProps> = ({
   glow = false,
 }) => {
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-40px' }}
@@ -29,6 +29,6 @@ export const Card: React.FC<CardProps> = ({
       )}
     >
       {children}
-    </motion.div>
+    </m.div>
   )
 }

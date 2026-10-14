@@ -1,5 +1,5 @@
 import React from 'react'
-import { motion } from 'framer-motion'
+import { m } from 'framer-motion'
 import { FiGithub, FiLinkedin, FiMail, FiInstagram, FiArrowUp } from 'react-icons/fi'
 import { FaFacebook } from 'react-icons/fa'
 import { useLanguage } from '@/components/providers/LanguageContext'
@@ -62,7 +62,7 @@ export const Footer: React.FC = () => {
             © {currentYear} {t.brand.first} {t.brand.last}. {t.footer.rights}
           </p>
 
-          <motion.button
+          <m.button
             whileHover={{ y: -2 }}
             whileTap={{ scale: 0.95 }}
             onClick={scrollToTop}
@@ -70,7 +70,7 @@ export const Footer: React.FC = () => {
             aria-label={t.common.backToTop}
           >
             <FiArrowUp className="h-5 w-5" />
-          </motion.button>
+          </m.button>
         </div>
       </div>
     </footer>

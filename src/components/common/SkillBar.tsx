@@ -1,5 +1,5 @@
 import React from 'react'
-import { motion } from 'framer-motion'
+import { m } from 'framer-motion'
 import clsx from 'clsx'
 
 interface SkillBarProps {
@@ -43,7 +43,7 @@ export const SkillBar: React.FC<SkillBarProps> = ({
         <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
           {name}
         </span>
-        <motion.span
+        <m.span
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
@@ -51,7 +51,7 @@ export const SkillBar: React.FC<SkillBarProps> = ({
           className="text-sm font-semibold text-gray-500 dark:text-gray-400"
         >
           {level}%
-        </motion.span>
+        </m.span>
       </div>
 
       <div
@@ -60,7 +60,7 @@ export const SkillBar: React.FC<SkillBarProps> = ({
           colors.bg
         )}
       >
-        <motion.div
+        <m.div
           initial={{ width: 0 }}
           whileInView={animate ? { width: `${level}%` } : undefined}
           viewport={{ once: true }}

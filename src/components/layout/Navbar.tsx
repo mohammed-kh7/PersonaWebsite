@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { motion, AnimatePresence, LayoutGroup } from 'framer-motion'
+import { m, AnimatePresence, LayoutGroup } from 'framer-motion'
 import { FiMenu, FiX, FiSun, FiMoon } from 'react-icons/fi'
 import { useTheme } from '@/components/providers/ThemeContext'
 import { useLanguage } from '@/components/providers/LanguageContext'
@@ -113,7 +113,7 @@ export const Navbar: React.FC = () => {
                   >
                     <span className="relative z-10">{t.nav.items[item.id]}</span>
                     {isActive && (
-                      <motion.div
+                      <m.div
                         layoutId="nav-active-pill"
                         className="absolute inset-0 rounded-lg bg-primary-500/10 dark:bg-primary-500/15"
                         style={{ zIndex: 0 }}
@@ -138,7 +138,7 @@ export const Navbar: React.FC = () => {
               aria-label={themeLabel}
             >
               <AnimatePresence mode="wait" initial={false}>
-                <motion.div
+                <m.div
                   key={theme}
                   initial={{ rotate: -90, opacity: 0 }}
                   animate={{ rotate: 0, opacity: 1 }}
@@ -150,7 +150,7 @@ export const Navbar: React.FC = () => {
                   ) : (
                     <FiSun className="h-5 w-5" />
                   )}
-                </motion.div>
+                </m.div>
               </AnimatePresence>
             </button>
           </div>
@@ -184,7 +184,7 @@ export const Navbar: React.FC = () => {
       {/* Mobile Menu */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div
+          <m.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
@@ -212,7 +212,7 @@ export const Navbar: React.FC = () => {
                 })}
               </div>
             </div>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </nav>

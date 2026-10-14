@@ -1,5 +1,5 @@
 import React from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { m, AnimatePresence } from 'framer-motion'
 import { FiGlobe } from 'react-icons/fi'
 import { useLanguage } from '@/components/providers/LanguageContext'
 import { localeLabels, localeShortLabels } from '@/i18n'
@@ -28,7 +28,7 @@ export const LanguageToggle: React.FC<LanguageToggleProps> = ({ className }) => 
     >
       <FiGlobe className="h-4 w-4 shrink-0" aria-hidden="true" />
       <AnimatePresence mode="wait" initial={false}>
-        <motion.span
+        <m.span
           key={nextLocale}
           lang={nextLocale}
           initial={{ opacity: 0, y: -4 }}
@@ -40,7 +40,7 @@ export const LanguageToggle: React.FC<LanguageToggleProps> = ({ className }) => 
           {/* Short code on small screens, full name once there is room */}
           <span className="sm:hidden">{localeShortLabels[nextLocale]}</span>
           <span className="hidden sm:inline">{localeLabels[nextLocale]}</span>
-        </motion.span>
+        </m.span>
       </AnimatePresence>
     </button>
   )

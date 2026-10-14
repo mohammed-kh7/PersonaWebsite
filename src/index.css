@@ -39,7 +39,7 @@
     @apply antialiased;
     background-color: var(--bg-primary);
     color: var(--text-primary);
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: 'Inter Variable', system-ui, -apple-system, sans-serif;
     transition: background-color 0.25s ease, color 0.25s ease;
   }
 
@@ -106,12 +106,12 @@
 
   /* ===== Arabic (RTL) typography ===== */
   html[dir='rtl'] body {
-    font-family: 'Tajawal', 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: 'Tajawal', 'Inter Variable', system-ui, -apple-system, sans-serif;
     letter-spacing: 0;
   }
 
   html[dir='rtl'] .font-display {
-    font-family: 'Tajawal', 'Plus Jakarta Sans', system-ui, sans-serif;
+    font-family: 'Tajawal', 'Plus Jakarta Sans', 'Inter Variable', system-ui, sans-serif;
   }
 
   html[dir='rtl'] :is(h1, h2, h3, h4) {
