@@ -96,9 +96,7 @@ export const Hero: React.FC = () => {
             <h1 className="mb-4 font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.12]">
               <BlurText key={`first-${locale}`} text={t.brand.first} className="inline-block" />
               <br />
-              <span className="gradient-text">
-                <BlurText key={`last-${locale}`} text={t.brand.last} className="inline-block" />
-              </span>
+              <BlurText key={`last-${locale}`} text={t.brand.last} className="inline-block gradient-text" />
             </h1>
 
             {/* Subtitle / Description */}
