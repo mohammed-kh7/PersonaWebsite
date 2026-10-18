@@ -14,62 +14,44 @@ interface BlurTextProps {
  */
 export const BlurText: React.FC<BlurTextProps> = ({ text, className, delay = 100 }) => {
   const containerRef = useRef<HTMLDivElement>(null)
-  const hasAnimated = useRef(false)
+  const textRef = useRef<string>('')
 
   // Detect RTL (Arabic) text
   const isRTL = /[؀-ۿ]/.test(text)
 
   useEffect(() => {
-    if (hasAnimated.current) return
-
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (prefersReducedMotion) {
-      hasAnimated.current = true
-      return
-    }
+    if (prefersReducedMotion) return
 
     const container = containerRef.current
     if (!container) return
 
-    // Add animation class with delay
-    const timer = setTimeout(() => {
-      container.classList.add('blur-text-animated')
-    }, delay)
+    // If text changed, remove old spans completely before rebuilding
+    if (textRef.current !== text) {
+      textRef.current = text
+      container.innerHTML = ''
+    }
 
-    hasAnimated.current = true
-    return () => clearTimeout(timer)
-  }, [text, delay])
+    if (isRTL) {
+      // For Arabic: show text as a single unit with fade-in
+      container.textContent = text
+      container.style.opacity = '0'
+      container.style.animation = 'none'
+      void container.offsetWidth
+      container.style.animation = `fadeIn 0.5s ease ${delay}ms forwards`
+      return
+    }
 
-  if (isRTL) {
-    // For Arabic: show text as a single unit with fade-in
-    return (
-      <div
-        ref={containerRef}
-        className={clsx('inline-block opacity-0 animate-fade-in', className)}
-        style={{ animationDelay: `${delay}ms` }}
-      >
-        {text}
-      </div>
-    )
-  }
+    // For LTR: build fresh spans and trigger animation
+    container.className = clsx('inline-flex overflow-hidden', className)
+    text.split('').forEach((char, i) => {
+      const span = document.createElement('span')
+      span.className = 'inline-block opacity-0 blur-char'
+      span.textContent = char === ' ' ? ' ' : char
+      span.style.animation = `blurIn 0.6s ease forwards ${i * 0.05 + delay / 1000}s`
+      container.appendChild(span)
+    })
+  }, [text, delay, isRTL, className])
 
-  // For LTR: split by characters for blur effect
-  return (
-    <div
-      ref={containerRef}
-      className={clsx('inline-flex overflow-hidden', className)}
-    >
-      {text.split('').map((char, i) => (
-        <span
-          key={`${text}-${i}`}
-          className="inline-block opacity-0 blur-char"
-          style={{
-            animation: `blurIn 0.6s ease forwards ${i * 0.05 + delay / 1000}s`,
-          }}
-        >
-          {char === ' ' ? ' ' : char}
-        </span>
-      ))}
-    </div>
-  )
+  return <div ref={containerRef} className={clsx(className)} />
 }
