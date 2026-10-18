@@ -65,7 +65,7 @@ export const Skills: React.FC = () => {
   return (
     <section
       id="skills"
-      className="section-padding relative overflow-hidden bg-slate-100/50 dark:bg-slate-900/30"
+      className="section-padding relative overflow-hidden bg-slate-100/50 dark:bg-slate-900/30 animate-on-scroll"
     >
       <div className="container-custom relative z-10">
         <SectionHeading

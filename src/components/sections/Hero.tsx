@@ -3,6 +3,10 @@ import { m } from 'framer-motion'
 import { useLanguage } from '@/components/providers/LanguageContext'
 import { FiGithub, FiLinkedin, FiMail } from 'react-icons/fi'
 import { FaFacebook } from 'react-icons/fa'
+import { BlurText } from '@/components/ui/BlurText'
+import { LightRays } from '@/components/ui/LightRays'
+import { StarBorder } from '@/components/ui/StarBorder'
+import { CountUp } from '@/components/ui/CountUp'
 
 const SOCIAL_LINKS = [
   {
@@ -39,11 +43,8 @@ export const Hero: React.FC = () => {
       id="hero"
       className="relative flex min-h-[calc(100vh-4.5rem)] items-center pt-20 pb-12 sm:pt-24 sm:pb-16 overflow-hidden"
     >
-      {/* Ambient background glow */}
-      <div
-        className="pointer-events-none absolute inset-0 -z-10 bg-radial-at-t from-blue-600/5 via-transparent to-transparent dark:from-blue-600/10 dark:via-transparent dark:to-transparent"
-        aria-hidden="true"
-      />
+      {/* Light Rays background effect (React Bits style) */}
+      <LightRays color="rgba(37, 99, 235, 0.06)" count={8} />
 
       <div className="container-custom w-full">
         <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-12">
@@ -91,11 +92,13 @@ export const Hero: React.FC = () => {
               {t.hero.greeting}
             </p>
 
-            {/* Main Name Heading */}
+            {/* Main Name Heading with BlurText (React Bits style) */}
             <h1 className="mb-4 font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.12]">
-              {t.brand.first}
+              <BlurText text={t.brand.first} className="inline-block" />
               <br />
-              <span className="gradient-text">{t.brand.last}</span>
+              <span className="gradient-text">
+                <BlurText text={t.brand.last} className="inline-block" />
+              </span>
             </h1>
 
             {/* Subtitle / Description */}
@@ -103,21 +106,25 @@ export const Hero: React.FC = () => {
               {t.hero.subtitle}
             </p>
 
-            {/* CTA Buttons */}
+            {/* CTA Buttons with StarBorder (React Bits style) */}
             <div className="mb-8 flex flex-wrap items-center justify-center lg:justify-start gap-3 w-full sm:w-auto">
-              <button
-                onClick={() => scrollTo('projects')}
-                className="inline-flex items-center justify-center rounded-xl bg-blue-600 px-6 py-3 text-sm sm:text-base font-semibold text-white shadow-md shadow-blue-600/25 transition-all duration-150 hover:bg-blue-700 active:bg-blue-800"
-              >
-                {t.hero.ctaPrimary}
-              </button>
+              <StarBorder color="rgba(37, 99, 235, 0.5)" sparkColor="#60a5fa">
+                <button
+                  onClick={() => scrollTo('projects')}
+                  className="inline-flex items-center justify-center rounded-xl bg-blue-600 px-6 py-3 text-sm sm:text-base font-semibold text-white shadow-md shadow-blue-600/25 transition-all duration-150 hover:bg-blue-700 active:bg-blue-800"
+                >
+                  {t.hero.ctaPrimary}
+                </button>
+              </StarBorder>
 
-              <button
-                onClick={() => scrollTo('contact')}
-                className="inline-flex items-center justify-center rounded-xl border-2 border-slate-300 dark:border-slate-700 bg-transparent px-6 py-3 text-sm sm:text-base font-semibold text-slate-800 dark:text-slate-200 transition-all duration-150 hover:border-blue-600 hover:text-blue-600 dark:hover:border-blue-500 dark:hover:text-blue-400 hover:bg-blue-50/40 dark:hover:bg-blue-950/20"
-              >
-                {t.hero.ctaSecondary}
-              </button>
+              <StarBorder color="rgba(255, 255, 255, 0.2)" sparkColor="#93c5fd">
+                <button
+                  onClick={() => scrollTo('contact')}
+                  className="inline-flex items-center justify-center rounded-xl border-2 border-slate-300 dark:border-slate-700 bg-transparent px-6 py-3 text-sm sm:text-base font-semibold text-slate-800 dark:text-slate-200 transition-all duration-150 hover:border-blue-600 hover:text-blue-600 dark:hover:border-blue-500 dark:hover:text-blue-400 hover:bg-blue-50/40 dark:hover:bg-blue-950/20"
+                >
+                  {t.hero.ctaSecondary}
+                </button>
+              </StarBorder>
             </div>
 
             {/* Social Links & Email */}
@@ -150,13 +157,16 @@ export const Hero: React.FC = () => {
               </a>
             </div>
 
-            {/* Quick Stats */}
+            {/* Quick Stats with CountUp (React Bits style) */}
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-8 pt-5 border-t border-slate-200/80 dark:border-white/10 w-full">
               {t.hero.stats.map((stat, i) => (
                 <div key={i} className="flex flex-col items-center lg:items-start">
-                  <span className="font-display text-2xl font-bold text-slate-900 dark:text-white">
-                    {stat.value}
-                  </span>
+                  <CountUp
+                    end={parseInt(stat.value.toString().replace(/\D/g, '')) || 0}
+                    suffix={stat.value.toString().replace(/[0-9]/g, '')}
+                    className="font-display text-2xl font-bold text-slate-900 dark:text-white"
+                    duration={2}
+                  />
                   <span className="text-xs text-slate-500 dark:text-slate-400">
                     {stat.label}
                   </span>

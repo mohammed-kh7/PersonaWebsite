@@ -19,7 +19,7 @@ export const About: React.FC = () => {
   const { t } = useLanguage()
 
   return (
-    <section id="about" className="section-padding relative overflow-hidden">
+    <section id="about" className="section-padding relative overflow-hidden animate-on-scroll">
       <div className="container-custom relative z-10">
         <SectionHeading
           title={t.about.title}
