@@ -236,3 +236,53 @@
     text-wrap: balance;
   }
 }
+
+/* ===== BlurText animations ===== */
+.blur-char {
+  display: inline-block;
+  opacity: 0;
+  filter: blur(10px);
+}
+
+.blur-text-animated .blur-char {
+  animation: blurIn 0.6s ease forwards;
+}
+
+@keyframes blurIn {
+  from {
+    opacity: 0;
+    filter: blur(10px);
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+/* Light Rays CSS animation */
+@keyframes rayRotate {
+  from { transform: rotate(var(--start-angle)); }
+  to { transform: rotate(var(--end-angle)); }
+}
+
+.ray-animate {
+  animation: rayRotate 10s ease-in-out infinite alternate;
+  transform-origin: center bottom;
+}

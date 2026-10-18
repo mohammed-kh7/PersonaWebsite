@@ -1,9 +1,5 @@
 import React, { useEffect, useRef } from 'react'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import clsx from 'clsx'
-
-gsap.registerPlugin(ScrollTrigger)
 
 interface BlurTextProps {
   text: string
@@ -12,12 +8,12 @@ interface BlurTextProps {
 }
 
 /**
- * BlurText component - React Bits style
- * Text starts blurred and comes into focus on scroll
+ * BlurText component - CSS-based blur animation on mount
+ * No GSAP dependency - lightweight and respects prefers-reduced-motion
  * RTL/Arabic text is NOT split by character to avoid breaking
  */
 export const BlurText: React.FC<BlurTextProps> = ({ text, className, delay = 100 }) => {
-  const spanRefs = useRef<(HTMLSpanElement | null)[]>([])
+  const containerRef = useRef<HTMLDivElement>(null)
   const hasAnimated = useRef(false)
 
   // Detect RTL (Arabic) text
@@ -32,67 +28,48 @@ export const BlurText: React.FC<BlurTextProps> = ({ text, className, delay = 100
       return
     }
 
-    const spans = spanRefs.current.filter(Boolean)
-    if (!spans.length) return
+    const container = containerRef.current
+    if (!container) return
 
-    const triggerEl = spans[0]?.closest('section') || spans[0]
-    if (!triggerEl) return
-
-    const timeline = gsap.timeline({
-      scrollTrigger: {
-        trigger: triggerEl,
-        start: 'top 80%',
-        end: 'bottom 20%',
-        toggleActions: 'play none none reverse',
-      },
-    })
-
-    spans.forEach((span, i) => {
-      if (span) {
-        timeline.fromTo(
-          span,
-          { filter: 'blur(10px)', opacity: 0 },
-          {
-            filter: 'blur(0px)',
-            opacity: 1,
-            duration: 0.6,
-            ease: 'power2.out',
-            delay: i * (delay / 1000),
-          }
-        )
-      }
-    })
+    // Add animation class with delay
+    const timer = setTimeout(() => {
+      container.classList.add('blur-text-animated')
+    }, delay)
 
     hasAnimated.current = true
-    return () => {
-      timeline.kill()
-    }
-  }, [delay])
+    return () => clearTimeout(timer)
+  }, [text, delay])
 
   if (isRTL) {
     // For Arabic: show text as a single unit with fade-in
     return (
-      <span
-        ref={(el) => (spanRefs.current[0] = el)}
-        className={clsx('inline-block', className)}
+      <div
+        ref={containerRef}
+        className={clsx('inline-block opacity-0 animate-fade-in', className)}
+        style={{ animationDelay: `${delay}ms` }}
       >
         {text}
-      </span>
+      </div>
     )
   }
 
   // For LTR: split by characters for blur effect
   return (
-    <span className={clsx('inline-flex overflow-hidden', className)}>
+    <div
+      ref={containerRef}
+      className={clsx('inline-flex overflow-hidden', className)}
+    >
       {text.split('').map((char, i) => (
         <span
-          key={i}
-          ref={(el) => (spanRefs.current[i] = el)}
-          className="inline-block"
+          key={`${text}-${i}`}
+          className="inline-block opacity-0 blur-char"
+          style={{
+            animation: `blurIn 0.6s ease forwards ${i * 0.05 + delay / 1000}s`,
+          }}
         >
           {char === ' ' ? ' ' : char}
         </span>
       ))}
-    </span>
+    </div>
   )
 }
