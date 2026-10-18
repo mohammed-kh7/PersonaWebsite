@@ -15,11 +15,21 @@ interface BlurTextProps {
 export const BlurText: React.FC<BlurTextProps> = ({ text, className, delay = 100 }) => {
   const containerRef = useRef<HTMLDivElement>(null)
   const hasAnimated = useRef(false)
+  const prevText = useRef(text)
 
   // Detect RTL (Arabic) text
   const isRTL = /[؀-ۿ]/.test(text)
 
   useEffect(() => {
+    // Reset animation state when text changes (language switch)
+    if (prevText.current !== text) {
+      hasAnimated.current = false
+      prevText.current = text
+      // Clear any leftover animation classes
+      const container = containerRef.current
+      if (container) container.className = ''
+    }
+
     if (hasAnimated.current) return
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -42,6 +52,7 @@ export const BlurText: React.FC<BlurTextProps> = ({ text, className, delay = 100
 
   if (isRTL) {
     // For Arabic: show text as a single unit with fade-in
+    // className passed from parent (e.g., "gradient-text") is applied directly
     return (
       <div
         ref={containerRef}
