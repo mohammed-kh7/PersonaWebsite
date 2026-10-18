@@ -29,7 +29,7 @@ const SOCIAL_LINKS = [
 const EMAIL = 'mohammedkhudair123@gmail.com'
 
 export const Hero: React.FC = () => {
-  const { t, locale } = useLanguage()
+  const { t } = useLanguage()
 
   const scrollTo = (id: string) => {
     const el = document.getElementById(id)
@@ -94,10 +94,10 @@ export const Hero: React.FC = () => {
 
             {/* Main Name Heading with BlurText (React Bits style) */}
             <h1 className="mb-4 font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.12]">
-              <BlurText key={`first-${locale}`} text={t.brand.first} className="inline-block" />
+              <BlurText text={t.brand.first} className="inline-block" />
               <br />
               <span className="gradient-text">
-                <BlurText key={`last-${locale}`} text={t.brand.last} className="inline-block" />
+                <BlurText text={t.brand.last} className="inline-block" />
               </span>
             </h1>
 
